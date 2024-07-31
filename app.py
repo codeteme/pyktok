@@ -94,7 +94,7 @@ elif selected_key in ('download_comments', 'download_comments_multiple_videos'):
             st.error("Error: No valid TikTok URLs found")
         else:
             for v in tt_visible_comments_list:
-                if pyk.save_visible_comments(v) is None: 
+                if pyk.save_tiktok_comments(v) is None: 
                     st.error('No comments found')
                 else: 
                     st.success('Download completed')
