@@ -81,6 +81,7 @@ elif selected_key in ('download_user_page', 'download_hashtag_page', 'download_m
     else:
         save_video = st.radio("Do you want to download the video?", ('No', 'Yes'))
         pyk.save_tiktok_multi_page(tt_multipage_url, save_video=='Yes', save_metadata=True, browser_name=browser_name)
+        # pyk.save_tiktok_multi_page(tt_multipage_url, save_video=='Yes', browser_name=browser_name)
         st.success('Download completed')
 
 
