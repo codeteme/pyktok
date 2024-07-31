@@ -15,12 +15,12 @@ browser_name = 'chrome' if browser_choice == 'Chrome' else 'firefox'
 
 options = {
     'download_single_video': 'Download a single TikTok video and one line of metadata to the file "video_data.csv"',
-    'download_metadata': 'Download only metadata from a single TikTok video to the file "video_data.csv"',
+    'download_multiple_videos': 'Download multiple TikTok videos and lines of metadata to the file "video_data.csv"',
     'download_user_page': 'Download up to 30 metadata lines from a user page',
-    'download_hashtag_page': 'Download up to 15 metadata lines from a hashtag page',
-    'download_music_page': 'Download up to 15 metadata lines from a music page',
-    'download_comments': 'Download all video comments initially visible on the page',
-    'download_comments_multiple_videos': 'Download visible comments from multiple videos at the same time'
+    'download_hashtag_page': 'Download up to 30 metadata lines from a hashtag page',
+    'download_related_videos': 'Download up to 30 metadata lines from related videos', # get_video_urls indicates it's from related videos, not a music page
+    'download_comments': 'Download all video comments initially visible on one or more video pages', # handles both single and multiple videos
+    # 'download_comments_multiple_videos': 'Download visible comments from multiple videos at the same time'
 }
 
 selected_option = st.selectbox("Please select the option you would like to use", list(options.values()))
@@ -59,7 +59,7 @@ if selected_key == 'download_single_video':
 
         
 
-elif selected_key == 'download_metadata':
+elif selected_key == 'download_multiple_videos':
     multi_tt_urls = st.text_input('Enter the URLs of the videos separated by a comma: ', )
     if not multi_tt_urls:
         st.error("Error: Empty URL")
@@ -80,12 +80,11 @@ elif selected_key in ('download_user_page', 'download_hashtag_page', 'download_m
         st.error("Error: Not a valid TikTok URL")
     else:
         save_video = st.radio("Do you want to download the video?", ('No', 'Yes'))
-        pyk.save_tiktok_multi_page(tt_multipage_url, save_video=='Yes', save_metadata=True, browser_name=browser_name)
-        # pyk.save_tiktok_multi_page(tt_multipage_url, save_video=='Yes', browser_name=browser_name)
+        pyk.save_tiktok_multi_page(tt_multipage_url, save_video=='Yes', browser_name=browser_name)
         st.success('Download completed')
 
 
-elif selected_key in ('download_comments', 'download_comments_multiple_videos'):
+elif selected_key in ('download_comments'):
     tt_visible_comments_str = st.text_input("Enter the URLs of the videos separated by a comma:")
     if not tt_visible_comments_str:
         st.error("Error: Empty URL")
